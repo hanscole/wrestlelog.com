@@ -37,6 +37,7 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/calendar']],
         ['label' => 'Notes', 'url' => ['/notes']],
+        ['label' => 'Practice Log', 'url' => ['/practice-log']],
 
     ];
     if (Yii::$app->user->isGuest) {
