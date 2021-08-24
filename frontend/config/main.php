@@ -15,11 +15,6 @@ return [
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
-        ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
@@ -36,21 +31,26 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-//
-//        'urlManager' => [
-//            'class' => 'codefix\locales\UrlManager',
-//            'languages' => false,
-//            'enablePrettyUrl' => true,
-//            'enableDefaultLanguageUrlCode' => true,
-//            'showScriptName' => false,
-//            'enableStrictParsing' => false,
-//            'rules' => [
-//                'index' => 'site/index',
-//                '<controller:\w+>' => '<controller>/index',
-//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-//            ],
-//        ],
+
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => false,
+            'rules' => [
+                'index' => 'site/index',
+                '<controller:\w+>' => '<controller>/index',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ],
+        ],
     ],
+    'modules' => [
+        'user' => [
+            'class' => Da\User\Module::class,
+            'administrators' => ['admin'],
+            'generatePasswords' => true,
+
+        ],
+    ],
+
     'params' => $params,
 ];
