@@ -36,14 +36,21 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
+//
+//        'urlManager' => [
+//            'class' => 'codefix\locales\UrlManager',
+//            'languages' => false,
+//            'enablePrettyUrl' => true,
+//            'enableDefaultLanguageUrlCode' => true,
+//            'showScriptName' => false,
+//            'enableStrictParsing' => false,
+//            'rules' => [
+//                'index' => 'site/index',
+//                '<controller:\w+>' => '<controller>/index',
+//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+//            ],
+//        ],
     ],
     'params' => $params,
 ];

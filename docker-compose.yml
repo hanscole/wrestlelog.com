@@ -23,12 +23,27 @@ services:
       - ./:/app
 
   mysql:
+    ports:
+      - 22080:3306
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD=verysecret
-      - MYSQL_DATABASE=yii2advanced
+      - MYSQL_DATABASE=wrestlelog
       - MYSQL_USER=yii2advanced
       - MYSQL_PASSWORD=secret
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 23080:80
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: yii2advanced
+      PMA_PASSWORD: secret
+      PMA_ARBITRARY: 1
+    depends_on:
+      - mysql
 
   #pgsql:
   #  image: postgres:9.5
