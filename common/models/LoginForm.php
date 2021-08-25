@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Da\User\Model\User;
 use Yii;
 use yii\base\Model;
 

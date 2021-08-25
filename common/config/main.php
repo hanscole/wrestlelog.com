@@ -10,4 +10,12 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
     ],
+    'modules' => [
+        'user' => [
+            'class' => Da\User\Module::class,
+            'administrators' => ['admin'],
+            'generatePasswords' => true,
+
+        ],
+    ],
 ];

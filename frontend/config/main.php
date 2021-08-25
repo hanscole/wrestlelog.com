@@ -49,8 +49,10 @@ return [
             'administrators' => ['admin'],
             'generatePasswords' => true,
 
+            ],
         ],
-    ],
 
-    'params' => $params,
+        'params' => $params,
+
 ];
+

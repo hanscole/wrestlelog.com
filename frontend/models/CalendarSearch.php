@@ -1,7 +1,7 @@
 <?php
 namespace frontend\models;
 
-use common\models\User;
+use Da\User\Model\User;
 use Yii;
 use yii\data\ActiveDataProvider;
 

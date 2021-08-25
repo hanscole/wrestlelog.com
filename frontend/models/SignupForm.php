@@ -24,14 +24,14 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => 'Da\User', 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => 'Da\User\Model\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => 'Da\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => 'Da\User\Model\User', 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
@@ -52,9 +52,8 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
+        $user->password = $this->password;
+        $user->beforeSave(true);
 
         return $user->save() && $this->sendEmail($user);
     }
