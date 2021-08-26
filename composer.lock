@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4911bdc4c4a878090243b29d4541bf68",
+    "content-hash": "e9b933c72c02f4b4abdbb25f20ac8636",
     "packages": [
         {
             "name": "2amigos/yii2-selectize-widget",

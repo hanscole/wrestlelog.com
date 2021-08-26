@@ -21,6 +21,14 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'encryption' => 'tls',
+                'host' => getenv("EMAIL_HOST"),
+                'port' => getenv("EMAIL_PORT"),
+                'username' => getenv("EMAIL_USER"),
+                'password' => getenv("EMAIL_PASS"),
+            ],
         ],
     ],
 ];

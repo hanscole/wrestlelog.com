@@ -31,9 +31,12 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
         'urlManager' => [
+            'class' => 'codemix\localeurls\UrlManager',
+            'languages' => false,
             'enablePrettyUrl' => true,
+            'enableDefaultLanguageUrlCode' => true,
+            'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
                 'index' => 'site/index',
