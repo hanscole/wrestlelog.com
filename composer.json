@@ -34,6 +34,9 @@
         "marekpetras/yii2-calendarview-widget": "^1.0"
 
     },
+    "scripts": {
+        "post-install-cmd": "sh post-install-cmd.sh"
+    },
     "config": {
         "process-timeout": 1800,
         "fxp-asset": {
