@@ -5,9 +5,10 @@ $params = array_merge(
     require __DIR__ . '/params.php',
     require __DIR__ . '/params-local.php'
 );
-
+$appName = 'WrestleLog';
 return [
     'id' => 'app-frontend',
+    'name' => $appName,
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
