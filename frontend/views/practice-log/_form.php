@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
 
     <?= $form->field($model, 'date')->textInput() ?>
 
@@ -20,7 +19,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'minutes')->textInput() ?>
 
-    <?= $form->field($model, 'created_date')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

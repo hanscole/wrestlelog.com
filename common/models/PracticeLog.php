@@ -50,4 +50,9 @@ class PracticeLog extends \yii\db\ActiveRecord
             'created_date' => 'Created Date',
         ];
     }
+
+    public function getUser(){
+       return $this->hasOne('Da\User\Model\Usewr', ['id' => 'user_id']);
+
+    }
 }

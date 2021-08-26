@@ -34,17 +34,20 @@ AppAsset::register($this);
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
-    $menuItems = [
+
+
+
+    if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Sign up', 'url' => ['/user/registration/register']];
+        $menuItems[] = ['label' => 'Sign in', 'url' => ['/user/security/login']];
+    } else {
+  $menuItems = [
         ['label' => 'Home', 'url' => ['/']],
         ['label' => 'Notes', 'url' => ['/notes']],
         ['label' => 'Practice Log', 'url' => ['/practice-log']],
         ['label' => 'Meal Log', 'url' => ['/meal-log']],
+      ];
 
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/user/registration/register']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/user/security/login']];
-    } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
             . Html::submitButton(
