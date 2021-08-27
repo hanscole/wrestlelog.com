@@ -9,10 +9,8 @@ use Yii;
  *
  * @property int $id
  * @property int $user_id
- * @property string $username
- * @property string $notes
+ * @property string $note
  * @property int $created_at
- * @property int $updated_at
  */
 class Notes extends \yii\db\ActiveRecord
 {
@@ -30,10 +28,9 @@ class Notes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'username', 'notes', 'created_at', 'updated_at'], 'required'],
-            [['user_id', 'created_at', 'updated_at'], 'integer'],
-            [['username'], 'string', 'max' => 32],
-            [['notes'], 'string', 'max' => 6000],
+            [['user_id', 'note'], 'required'],
+            [['user_id', 'created_date' ], 'integer'],
+            [['note'], 'string', 'max' => 6000],
         ];
     }
 
@@ -45,7 +42,7 @@ class Notes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'notes' => 'Notes',
+            'note' => 'Notes',
             'created_date' => 'Date',
         ];
     }
