@@ -3,7 +3,11 @@
 namespace frontend\controllers;
 
 use common\models\PracticeLog;
+use Da\User\Controller\PermissionController;
+use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\AccessRule;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,15 +15,14 @@ use yii\filters\VerbFilter;
 /**
  * PracticeLogController implements the CRUD actions for PracticeLog model.
  */
-class PracticeLogController extends Controller
+class PracticeLogController extends \frontend\controllers\Controller
 {
     /**
      * @inheritDoc
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
+        return
             [
                 'verbs' => [
                     'class' => VerbFilter::className(),
@@ -27,8 +30,7 @@ class PracticeLogController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
-            ]
-        );
+            ];
     }
 
     /**
@@ -37,19 +39,21 @@ class PracticeLogController extends Controller
      */
     public function actionIndex()
     {
+        if ($this->getGuest()){
+            return $this->redirect('/user/login');
+        }
+
+        $query = PracticeLog::find();
+
+        if (!Yii::$app->user->identity->isAdmin) {
+
+            $query->andOnCondition([PracticeLog::tableName() . '.user_id' => Yii::$app->user->id]);
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => PracticeLog::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
+            'query' => $query,
         ]);
+
+
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -64,6 +68,10 @@ class PracticeLogController extends Controller
      */
     public function actionView($id)
     {
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -76,6 +84,11 @@ class PracticeLogController extends Controller
      */
     public function actionCreate()
     {
+
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
+
         $model = new PracticeLog();
 
         if ($this->request->isPost) {
@@ -100,6 +113,12 @@ class PracticeLogController extends Controller
      */
     public function actionUpdate($id)
     {
+
+        if ($this->getGuest()){
+        return  $this->redirect('/user/login');
+    }
+
+
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -120,6 +139,10 @@ class PracticeLogController extends Controller
      */
     public function actionDelete($id)
     {
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
+
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
@@ -140,4 +163,5 @@ class PracticeLogController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

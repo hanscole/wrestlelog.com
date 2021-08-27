@@ -44,7 +44,14 @@ class MealLog extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'meal' => 'Meal',
-            'created_date' => 'Created Date',
+            'created_date' => 'Date',
         ];
+    }
+
+    public function init()
+    {
+        parent::init();
+
+        $this->setAttribute('user_id', Yii::$app->user->identity->getId());
     }
 }

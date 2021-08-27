@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Notes;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * NotesController implements the CRUD actions for Notes model.
  */
-class NotesController extends Controller
+class NotesController extends \frontend\controllers\Controller
 {
     /**
      * @inheritDoc
@@ -37,18 +38,17 @@ class NotesController extends Controller
      */
     public function actionIndex()
     {
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
+        $query = Notes::find();
+
+        if (!Yii::$app->user->identity->isAdmin) {
+
+            $query->andOnCondition([Notes::tableName() . '.user_id' => Yii::$app->user->id]);
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => Notes::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
+            'query' => $query,
         ]);
 
         return $this->render('index', [
@@ -64,6 +64,10 @@ class NotesController extends Controller
      */
     public function actionView($id)
     {
+
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -76,6 +80,10 @@ class NotesController extends Controller
      */
     public function actionCreate()
     {
+
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
         $model = new Notes();
 
         if ($this->request->isPost) {
@@ -100,6 +108,10 @@ class NotesController extends Controller
      */
     public function actionUpdate($id)
     {
+
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -120,6 +132,10 @@ class NotesController extends Controller
      */
     public function actionDelete($id)
     {
+
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

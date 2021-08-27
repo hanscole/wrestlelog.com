@@ -45,10 +45,15 @@ class Notes extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'username' => 'Username',
             'notes' => 'Notes',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'created_date' => 'Date',
         ];
+    }
+
+    public function init()
+    {
+        parent::init();
+
+        $this->setAttribute('user_id', Yii::$app->user->identity->getId());
     }
 }

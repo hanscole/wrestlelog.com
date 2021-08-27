@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\MealLog;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * MealLogController implements the CRUD actions for MealLog model.
  */
-class MealLogController extends Controller
+class MealLogController extends \frontend\controllers\Controller
 {
     /**
      * @inheritDoc
@@ -37,18 +38,17 @@ class MealLogController extends Controller
      */
     public function actionIndex()
     {
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
+        $query = MealLog::find();
+
+        if (!Yii::$app->user->identity->isAdmin) {
+
+            $query->andOnCondition([MealLog::tableName() . '.user_id' => Yii::$app->user->id]);
+        }
         $dataProvider = new ActiveDataProvider([
-            'query' => MealLog::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
+            'query' => $query,
         ]);
 
         return $this->render('index', [
@@ -64,6 +64,9 @@ class MealLogController extends Controller
      */
     public function actionView($id)
     {
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -76,6 +79,9 @@ class MealLogController extends Controller
      */
     public function actionCreate()
     {
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
         $model = new MealLog();
 
         if ($this->request->isPost) {
@@ -100,6 +106,9 @@ class MealLogController extends Controller
      */
     public function actionUpdate($id)
     {
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
@@ -120,6 +129,9 @@ class MealLogController extends Controller
      */
     public function actionDelete($id)
     {
+        if ($this->getGuest()){
+            return  $this->redirect('/user/login');
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

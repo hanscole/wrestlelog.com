@@ -30,9 +30,9 @@ class PracticeLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'date'], 'required'],
+            [['user_id'], 'required'],
             [['user_id', 'hours', 'minutes'], 'integer'],
-            [['date', 'created_date'], 'safe'],
+            [['created_date'], 'safe'],
         ];
     }
 
@@ -44,15 +44,21 @@ class PracticeLog extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'date' => 'Date',
             'hours' => 'Hours',
             'minutes' => 'Minutes',
-            'created_date' => 'Created Date',
+            'created_date' => 'Date',
         ];
     }
 
+    public function init()
+    {
+        parent::init();
+
+        $this->setAttribute('user_id', Yii::$app->user->identity->getId());
+    }
+
     public function getUser(){
-       return $this->hasOne('Da\User\Model\Usewr', ['id' => 'user_id']);
+       return $this->hasOne('Da\User\Model\User', ['id' => 'user_id']);
 
     }
 }
